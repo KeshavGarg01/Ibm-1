@@ -1,29 +1,30 @@
 const pool = require("../config/db");
 
-const getTeacherCohort = (req, res) => {
-	const { tc_id } = req.body;
-	pool.getConnection((err, conn) => {
-		if (err) res.status(400).send("Connection Error");
-		else {
-			let sql = "SELECT * FROM Cohort WHERE TC_id = ?";
+// const getStudentCohort = (req, res) => {
+//     const { tc_id } = req.body
+//     pool.getConnection((err, conn) => {
+//         if(err) res.status(400).send('Connection Error');
+//         else {
+//           let sql = 'SELECT * FROM Cohort WHERE TC_id = ?'
 
-			conn.query(sql, [tc_id], (err, result) => {
-				if (err) res.status(400).send("Querry Error");
-				else {
-					if (result.length > 0) {
-						res.json(result);
-					} else {
-						res.status(401);
-						res.json({ message: "No Data Found" });
-					}
-				}
-				conn.release();
-			});
-		}
-	});
-};
+//           conn.query(sql, [tc_id], (err, result) => {
+//               if(err) res.status(400).send('Querry Error');
+//               else {
+//                 if(result.length > 0) {
+//                     res.json(result)
+//                 }
+//                 else {
+//                     res.status(401)
+//                     res.json({ message: "No Data Found" })
+//                 }
+//               }
+//               conn.release();
+//             })
+//           }
+//       })
+// }
 
-const getTeacherCourses = (req, res) => {
+const getStudentCourses = (req, res) => {
 	const { cu_id } = req.body;
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
@@ -46,7 +47,7 @@ const getTeacherCourses = (req, res) => {
 	});
 };
 
-const getTeacherSessionPlans = (req, res) => {
+const getStudentSessionPlans = (req, res) => {
 	const { co_id } = req.body;
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
@@ -69,7 +70,7 @@ const getTeacherSessionPlans = (req, res) => {
 	});
 };
 
-const getTeacherSections = (req, res) => {
+const getStudentSections = (req, res) => {
 	const { sp_id } = req.body;
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
@@ -115,17 +116,19 @@ const getContent = (req, res) => {
 	});
 };
 
-const getTeacherAssessments = (req, res) => {
-	console.log("hi");
-	const { co_id } = req.body;
+const getStudentAssessments = (req, res) => {
+	const { st_id } = req.body;
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
 		else {
-			let sql = `SELECT * FROM assessment WHERE CO_id = ?;`;
+			let sql = `select AM_id,AM_Name,AM_Duration from assessment where AM_id IN (select AM_id from cohortassessment where CH_id=(SELECT CH_id FROM cohortstudent WHERE ST_id = ?) and TC_id=(SELECT TC_id FROM cohortstudent WHERE ST_id = ?) and TP_id=(SELECT TP_id FROM cohortstudent WHERE ST_id = ?));`;
 
-			conn.query(sql, [co_id], (err, result) => {
-				if (err) res.status(400).send("Querry Error");
-				else {
+			conn.query(sql, [st_id, st_id, st_id], (err, result) => {
+				if (err) {
+					res.status(400).send("Querry Error");
+					// console.log("hellooo");
+				} else {
+					// console.log("hellooo");
 					if (result.length > 0) {
 						res.json(result);
 					} else {
@@ -139,37 +142,10 @@ const getTeacherAssessments = (req, res) => {
 	});
 };
 
-const updateTeacherAssessments = (req, res) => {
-	const { ch_id, tc_id, tp_id, am_id, co_id } = req.body;
-
-	pool.getConnection((err, conn) => {
-		if (err) res.status(400).send("Connection Error");
-		else {
-			//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
-			let sql = `insert into cohortassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'Unlocked',?,?);`;
-
-			conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
-				if (err) res.status(400).send("Querry Error");
-				else {
-					console.log(req.body);
-					if (result.length > 0) {
-						res.json(result);
-					} else {
-						res.status(401);
-						res.json({ message: "No Data Found" });
-					}
-				}
-			});
-		}
-	});
-};
-
 module.exports = {
-	updateTeacherAssessments,
-	getTeacherCohort,
-	getTeacherCourses,
-	getTeacherSessionPlans,
-	getTeacherSections,
+	/*getStudentCohort,*/ getStudentCourses,
+	getStudentSessionPlans,
+	getStudentSections,
 	getContent,
-	getTeacherAssessments,
+	getStudentAssessments,
 };

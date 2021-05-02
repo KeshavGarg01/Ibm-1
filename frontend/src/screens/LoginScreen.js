@@ -45,8 +45,8 @@ export const LoginScreen = ({ location, history }) => {
                     <Form.Control required type="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)}></Form.Control>
                 </Form.Group>
                 <Form.Group controlId='role'>
-                    <Form.Label style={{padding: "0.5rem"}} ><input required type="radio" value="Student" name="role" onChange={(e) => setRole(e.target.value)} /> Student </Form.Label>
-                    <Form.Label style={{padding: "0.5rem 1rem"}} ><input required type="radio" value="Teacher" name="role" onChange={(e) => setRole(e.target.value)} /> Teacher </Form.Label>
+                    <Form.Label style={{padding: "0.5rem"}} ><input required type="button" value="Student" name="role" onClick={(e) => setRole(e.target.value)} /></Form.Label>
+                    <Form.Label style={{padding: "0.5rem 1rem"}} ><input required type="button" value="Teacher" name="role" onClick={(e) => setRole(e.target.value)} /></Form.Label>
                 </Form.Group>
                 <Button type="submit" variant="primary">
                     Sign In

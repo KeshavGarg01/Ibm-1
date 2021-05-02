@@ -41,7 +41,7 @@ export const CourseScreen = ({ history, match }) => {
             {CoursesInfo.map((key, index) => 
             <tr key={key.CO_id}>
             <td>{key.CO_id}</td>
-            <Link to={`/sessions/${key.CO_id}`}><td>{key.CO_Name}</td></Link>
+            <Link to={`/assessment/${key.CO_id}`}><td>{key.CO_Name}</td></Link>
             <td>{key.CO_Insertdate === null ?  `${key.CO_Insertdate}` : key.CO_Insertdate}</td>
           </tr>
           )}
