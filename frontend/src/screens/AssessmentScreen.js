@@ -53,7 +53,7 @@ export var AssessmentScreen = ({ history, match }) => {
 	};
 
 	useEffect(() => {
-		if (userInfo && role === "Teacher") {
+		if (userInfo && userRole === "Teacher") {
 			dispatch(assessmentDetails(match.params.id));
 		} else {
 			history.push("/login");
