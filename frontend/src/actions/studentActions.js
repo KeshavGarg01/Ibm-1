@@ -1,62 +1,47 @@
 import {
-	STUDENT_COHORT_REQUEST,
-	STUDENT_COHORT_SUCCESS,
-	STUDENT_COHORT_FAIL,
-	STUDENT_COURSES_REQUEST,
-	STUDENT_COURSES_SUCCESS,
-	STUDENT_COURSES_FAIL,
-	STUDENT_SESSIONS_REQUEST,
-	STUDENT_SESSIONS_SUCCESS,
-	STUDENT_SESSIONS_FAIL,
-	STUDENT_SESSION_SECTIONS_REQUEST,
-	STUDENT_SESSION_SECTIONS_SUCCESS,
-	STUDENT_SESSION_SECTIONS_FAIL,
+	TEACHER_COURSES_REQUEST,
+	TEACHER_COURSES_SUCCESS,
+	TEACHER_COURSES_FAIL,
+	TEACHER_SESSIONS_REQUEST,
+	TEACHER_SESSIONS_SUCCESS,
+	TEACHER_SESSIONS_FAIL,
+} from "../constants/teacherConstants";
+import {
 	STUDENT_ASSESSMENTS_SUCCESS,
 	STUDENT_ASSESSMENTS_REQUEST,
 	STUDENT_ASSESSMENTS_FAIL,
 } from "../constants/studentConstants";
 import axios from "axios";
+import {
+	FAQ_FAIL,
+	FAQ_REQUEST,
+	FAQ_SUCCESS,
+} from "../constants/studentConstants";
 
-// export const cohortDeatils = (tc_id) => async(dispatch, getState) => {
-//     try {
-//         dispatch({ type: STUDENT_COHORT_REQUEST })
-
-//         const config = {
-//             header: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
-
-//         const { data } = await axios.post('api/teachers/cohort', {tc_id}, config)
-//         dispatch({ type: STUDENT_COHORT_SUCCESS, payload: data })
-
-//     } catch (error) {
-//         dispatch({
-//             type: STUDENT_COHORT_FAIL,
-//             payload: error.response && error.response.data.message ? error.response.data.message : error.message
-//         })
-//     }
-// }
-
-export const courseDetails = (cu_id) => async (dispatch, getState) => {
+export const coursesDetails = (st_id) => async (dispatch, getState) => {
 	try {
-		dispatch({ type: STUDENT_COURSES_REQUEST });
+		dispatch({ type: TEACHER_COURSES_REQUEST });
+		const {
+			userLogin: { userInfo, userRole },
+		} = getState();
 
 		const config = {
-			header: {
+			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${userInfo.token}`,
+				role: `${userRole}`,
 			},
 		};
 
 		const { data } = await axios.post(
 			"/api/student/courses",
-			{ cu_id },
+			{ st_id },
 			config
 		);
-		dispatch({ type: STUDENT_COURSES_SUCCESS, payload: data });
+		dispatch({ type: TEACHER_COURSES_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
-			type: STUDENT_COURSES_FAIL,
+			type: TEACHER_COURSES_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message
@@ -65,13 +50,18 @@ export const courseDetails = (cu_id) => async (dispatch, getState) => {
 	}
 };
 
-export const sessionDetails = (co_id) => async (dispatch, getState) => {
+export const studentsessionDetails = (co_id) => async (dispatch, getState) => {
 	try {
-		dispatch({ type: STUDENT_SESSIONS_REQUEST });
+		dispatch({ type: TEACHER_SESSIONS_REQUEST });
+		const {
+			userLogin: { userInfo, userRole },
+		} = getState();
 
 		const config = {
-			header: {
+			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${userInfo.token}`,
+				role: `${userRole}`,
 			},
 		};
 
@@ -80,10 +70,10 @@ export const sessionDetails = (co_id) => async (dispatch, getState) => {
 			{ co_id },
 			config
 		);
-		dispatch({ type: STUDENT_SESSIONS_SUCCESS, payload: data });
+		dispatch({ type: TEACHER_SESSIONS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
-			type: STUDENT_SESSIONS_FAIL,
+			type: TEACHER_SESSIONS_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message
@@ -91,26 +81,26 @@ export const sessionDetails = (co_id) => async (dispatch, getState) => {
 		});
 	}
 };
-
-export const sessionSectionDetails = (sp_id) => async (dispatch, getState) => {
+export const studentqna = (question) => async (dispatch, getState) => {
 	try {
-		dispatch({ type: STUDENT_SESSION_SECTIONS_REQUEST });
+		dispatch({ type: FAQ_REQUEST });
+		const {
+			userLogin: { userInfo, userRole },
+		} = getState();
 
 		const config = {
-			header: {
+			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${userInfo.token}`,
+				role: `${userRole}`,
 			},
 		};
 
-		const { data } = await axios.post(
-			"/api/student/sections",
-			{ sp_id },
-			config
-		);
-		dispatch({ type: STUDENT_SESSION_SECTIONS_SUCCESS, payload: data });
+		const { data } = await axios.post("/api/student/qna", { question }, config);
+		dispatch({ type: FAQ_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
-			type: STUDENT_SESSION_SECTIONS_FAIL,
+			type: FAQ_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message

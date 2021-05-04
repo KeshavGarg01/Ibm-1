@@ -3,19 +3,20 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer } from "./reducers/userReducers";
 import {
+	teacherContentStatusReducer,
 	teacherCohortReducer,
 	teacherCoursesReducer,
 	teacherSessionsReducer,
 	teacherSessionSectionReducer,
+	teacherTempReducer,
+	teacherSessionStatusReducer,
 	teacherAssessmentsReducer,
 } from "./reducers/teacherReducers";
-import {
-	studentCoursesReducer,
-	studentSessionsReducer,
-	studentSessionSectionReducer,
-	studentAssessmentsReducer,
-} from "./reducers/studentReducers";
 import { contentReducer } from "./reducers/contentReducer";
+import {
+	studentFAQReducer,
+	studentAssessmentsReducer,
+} from "./reducers/studentReducer";
 
 const reducer = combineReducers({
 	userLogin: userLoginReducer,
@@ -23,7 +24,11 @@ const reducer = combineReducers({
 	teacherCourses: teacherCoursesReducer,
 	teacherSessions: teacherSessionsReducer,
 	teacherSessionSection: teacherSessionSectionReducer,
+	teacherSessionStatus: teacherSessionStatusReducer,
 	content: contentReducer,
+	urlVar: teacherTempReducer,
+	teacherContentStatus: teacherContentStatusReducer,
+	studentFAQ: studentFAQReducer,
 	assessment: teacherAssessmentsReducer,
 	studentAssessment: studentAssessmentsReducer,
 });
@@ -34,9 +39,13 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 const userRoleFromStorage = localStorage.getItem("userRole")
 	? JSON.parse(localStorage.getItem("userRole"))
 	: null;
+const urlVarFromStorage = localStorage.getItem("urlParameter")
+	? JSON.parse(localStorage.getItem("urlParameter"))
+	: {};
 
 const initialState = {
-	userLogin: { userInfo: userInfoFromStorage, role: userRoleFromStorage },
+	userLogin: { userInfo: userInfoFromStorage, userRole: userRoleFromStorage },
+	urlVar: { urlParameter: urlVarFromStorage },
 };
 const middleware = [thunk];
 const store = createStore(

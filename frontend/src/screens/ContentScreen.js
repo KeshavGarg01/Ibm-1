@@ -16,23 +16,29 @@ const child = {
 }
 
 
-export const ContentScreen = ({ history, match }) => {
+export const ContentScreen = ({ history }) => {
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)
-    const { userInfo, role } = userLogin
+    const { userInfo } = userLogin
+
 
     const contentDetail = useSelector(state => state.content)
     const { loading, ContentInfo, error } = contentDetail
 
+    const urlVar = useSelector(state => state.urlVar)
+    const { urlParameter } = urlVar
+
+
     useEffect(()=> {
-        if(userInfo && role === 'Teacher') {
-            dispatch(contentDetails(match.params.id))
+        if(userInfo) {
+            dispatch(contentDetails(urlParameter.contentUrl))
         }
         else {
             history.push('/login') 
         }
-    }, [dispatch, history, match, role, userInfo])
+    }, [dispatch, history, urlParameter, userInfo])
+
 
 
     return (
