@@ -210,6 +210,29 @@ const getStudentAssessments = (req, res) => {
 	});
 };
 
+const getQuizzQuestions = (req, res) => {
+	
+	pool.getConnection((err, conn) => {
+		if (err) res.status(400).send("Connection Error");
+		else {
+			let sql = `SELECT * FROM assessmentquestion`;
+			
+			conn.query(sql, (err, result) => {
+				if (err) res.status(400).send("Querry Error");
+				else {
+					if (result.length > 0) {
+						res.json(result);
+					} else {
+						res.status(401);
+						res.json({ message: "No Data Found" });
+					}
+				}
+				conn.release();
+			});
+		}
+	});
+};
+
 module.exports = {
 	getStudentCourses,
 	getStudentSessionPlans,
@@ -217,4 +240,5 @@ module.exports = {
 	getContent,
 	getStudentqna,
 	getStudentAssessments,
+	getQuizzQuestions,
 };

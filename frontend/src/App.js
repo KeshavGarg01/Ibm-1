@@ -16,8 +16,8 @@ import UnlockSessionScreen from "./screens/UnlockSessionScreen";
 import QnaScreen from "./screens/QnaScreen";
 import AssessmentScreen from "./screens/AssessmentScreen";
 import StudentAssessmentScreen from "./screens/StudentAssessmentScreen";
-import temp from"./screens/temp";
 
+import Quizz from "./Quizz/Quizz"
 import ConductAssessmentScreen from "./screens/ConductAssessment";
 const App = () => {
 	return (
@@ -44,17 +44,21 @@ const App = () => {
 					<Route path="/unlock" component={UnlockScreen} />
 					<Route path="/unlocksessions" component={UnlockSessionScreen} />
 					<Route path="/qna" component={QnaScreen} />
-					<Route path="/assessment/:id" component={temp} />
+					<Route path="/assessment/:id" component={AssessmentScreen} />
 					<Route path="/assess" component={ConductAssessmentScreen} />
 					<Route path="/studentassess" component={StudentAssessmentScreen} />
 					{/* <Route
 						path="/studentassessment"
 						component={StudentAssessmentScreen}
 					/> */}
+					<Route path="/startquizz" component={Quizz} />
+
 				</Container>
 			</main>
 		</Router>
 	);
 };
+
+
 
 export default App;

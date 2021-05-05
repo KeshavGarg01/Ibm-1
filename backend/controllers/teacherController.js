@@ -229,16 +229,18 @@ const updateTeacherAssessments = (req, res) => {
 		else {
 			//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
 			let sql = `insert into cohortassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'Unlocked',?,?);`;
-
+			console.log("hiiiiiiiii")
 			conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
 				if (err) res.status(400).send("Querry Error");
 				else {
 					console.log(req.body);
 					if (result.length > 0) {
 						res.json(result);
+						console.log("helloooo");
 					} else {
 						res.status(401);
 						res.json({ message: "No Data Found" });
+						console.log("lul");
 					}
 				}
 			});

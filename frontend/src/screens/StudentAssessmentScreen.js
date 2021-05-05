@@ -10,18 +10,18 @@ export const StudentAssessmentScreen = ({ history, match }) => {
 	const dispatch = useDispatch();
 
 	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo, role /*loading, error*/ } = userLogin;
+	const { userInfo, userRole /*loading, error*/ } = userLogin;
 
 	const studentassessment = useSelector((state) => state.studentAssessment);
 	const { loading, AssessmentsInfo, error } = studentassessment;
 
 	useEffect(() => {
-		if (userInfo && role === "Student") {
+		if (userRole === "Student") {
 			dispatch(studentassessmentDetails(userInfo.ST_id));
 		} else {
 			history.push("/login");
 		}
-	}, [dispatch, history, match, role, userInfo]);
+	}, [dispatch, history, match, userRole, userInfo]);
 
 	return (
 		<>

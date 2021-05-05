@@ -8,10 +8,11 @@ import { assessmentDetails } from "../actions/teacherActions";
 //import {fun} from '../screens/CohortScreen.js'
 
 export var AssessmentScreen = ({ history, match }) => {
+	
 	var dispatch = useDispatch();
 
 	var userLogin = useSelector((state) => state.userLogin);
-	var { userInfo, role } = userLogin;
+	var { userInfo, userRole } = userLogin;
 
 	var assessmentDetail = useSelector((state) => state.assessment);
 	var { loading, AssessmentsInfo, error } = assessmentDetail;
@@ -58,7 +59,7 @@ export var AssessmentScreen = ({ history, match }) => {
 		} else {
 			history.push("/login");
 		}
-	}, [dispatch, history, match, role, userInfo]);
+	}, [dispatch, history, match, userRole, userInfo]);
 
 	return (
 		<>
