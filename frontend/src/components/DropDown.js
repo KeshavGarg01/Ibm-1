@@ -43,6 +43,12 @@ export const DropDown = ({ Role }) => {
 				</Dropdown.Item>
 				<Dropdown.Item href="#/action-3">View your performance</Dropdown.Item>
 				<Dropdown.Item href="#/action-1">Attending session</Dropdown.Item>
+				
+				<Dropdown.Item>
+					<Link to={`/studentassess`}>View Active Assessments</Link>
+				</Dropdown.Item>
+
+
 			</Dropdown.Menu>
 		</Dropdown>
 	);
