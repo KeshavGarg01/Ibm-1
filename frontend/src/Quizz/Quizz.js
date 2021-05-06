@@ -39,8 +39,6 @@ import Results from '../Results/Results';
      (JSON.stringify(myJson));
       this.setState({quiz_data: myJson});
       
-      
-      
     })
 
   }

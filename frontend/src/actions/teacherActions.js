@@ -292,9 +292,9 @@ export const assessmentDetails = (co_id) => async (dispatch, getState) => {
 	}
 };
 
-export const updateAssessmentDetails = (ch_id, tc_id, tp_id, am_id, co_id) => {
+export const updateAssessmentDetails = (ch_id, tc_id, tp_id, am_id, co_id, CA_status) => {
 	//const cu_id = useSelector(state=>state.teacherCourses.coursesInfo.CU_id)
-	console.log(ch_id, tc_id, tp_id, am_id, co_id)
+	console.log(ch_id, tc_id, tp_id, am_id, co_id, CA_status)
 
 	axios.post("/api/teachers/updateassessments", {
 		ch_id,
@@ -302,5 +302,6 @@ export const updateAssessmentDetails = (ch_id, tc_id, tp_id, am_id, co_id) => {
 		tp_id,
 		am_id,
 		co_id,
+		CA_status,
 	});
 };

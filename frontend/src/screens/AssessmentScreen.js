@@ -47,6 +47,7 @@ export var AssessmentScreen = ({ history, match }) => {
 		ch_id=urlParameter.cohortID;
 
 		updateAssessmentDetails(ch_id, tc_id, tp_id, am_id, co_id, CA_status);
+		
 	};
 
 	useEffect(() => {
@@ -100,17 +101,18 @@ export var AssessmentScreen = ({ history, match }) => {
 
 {(() => {
             if (key.CA_status == null) {
+				console.log(key.CA_status)
               return (
                 
 					<button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
 										> unlock </button>
+										
 				
               )
             } else if (key.CA_status == "U") {
               return (
                 <button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
-										> End assessment </button>
-				
+				> End assessment </button>			
               )
             } else {
               return (

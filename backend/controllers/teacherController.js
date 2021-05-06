@@ -250,8 +250,8 @@ const updateTeacherAssessments = (req, res) => {
 
 			else if(CA_status == "U")
 			{//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
-				let sql = `update table cohorassessment set CA_status='E' WHERE CH_id=?, TC_id=?, TP_id=?, AM_id=?, CO_id=? ;`;
-				// console.log("hiiiiiiiii")
+				let sql = `update cohorassessment set CA_status='E' WHERE CH_id=1 AND TC_id=1 AND TP_id=1 AND AM_id=1 AND CO_id=1`;
+				 console.log(CA_status);
 				conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
 					
 					if (err) res.status(400).send(err);
