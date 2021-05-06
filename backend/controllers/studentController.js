@@ -192,7 +192,7 @@ const getStudentAssessments = (req, res) => {
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
 		else {
-			let sql = `select AM_id,AM_Name,AM_Duration from assessment where AM_id IN (select AM_id from cohorassessment where CH_id=(SELECT CH_id FROM cohortstudent WHERE ST_id = ?) and TC_id=(SELECT TC_id FROM cohortstudent WHERE ST_id = ?) and TP_id=(SELECT TP_id FROM cohortstudent WHERE ST_id = ?));`;
+			let sql = `select AM_id,AM_Name,AM_Duration from assessment where AM_id IN (select AM_id from cohorassessment where CH_id=(SELECT CH_id FROM cohortstudent WHERE ST_id = ?) and TC_id=(SELECT TC_id FROM cohortstudent WHERE ST_id = ?) and TP_id=(SELECT TP_id FROM cohortstudent WHERE ST_id = ?) and CA_status='U');`;
 
 			conn.query(sql, [st_id, st_id, st_id], (err, result) => {
 				if (err) {

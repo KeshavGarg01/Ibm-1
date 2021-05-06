@@ -204,7 +204,7 @@ const getTeacherAssessments = (req, res) => {
 		if (err) res.status(400).send("Connection Error");
 		else {
 			//let sql = `SELECT * FROM assessment WHERE CO_id = ?;`;
-			let sql=`select AM.CO_id, AM.AM_id, AM.AM_Name, CA.CA_status from assessment as AM LEFT JOIN cohorassessment as CA ON AM.AM_id = CA.AM_id WHERE AM.CO_id=?;`
+			let sql=`select AM.CO_id, AM.AM_id, AM.AM_Name, CA.CA_status from assessment AM LEFT JOIN cohorassessment as CA ON AM.AM_id = CA.AM_id WHERE AM.CO_id=?;`
 			conn.query(sql, [co_id], (err, result) => {
 				if (err) res.status(400).send(err);
 				else {
@@ -250,7 +250,7 @@ const updateTeacherAssessments = (req, res) => {
 
 			else if(CA_status == "U")
 			{//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
-				let sql = `update cohorassessment set CA_status='E' WHERE CH_id=1 AND TC_id=1 AND TP_id=1 AND AM_id=1 AND CO_id=1`;
+				let sql = `update cohorassessment set CA_status='E' WHERE CH_id=? AND TC_id=? AND TP_id=? AND AM_id=? AND CO_id=?`;
 				 console.log(CA_status);
 				conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
 					
@@ -263,7 +263,7 @@ const updateTeacherAssessments = (req, res) => {
 						} else {
 							res.status(401);
 							res.json({ message: "No Data Found" });
-							console.log("lul");
+							//console.log("lul");
 						}
 					}
 				});}
