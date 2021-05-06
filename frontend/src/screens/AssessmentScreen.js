@@ -26,15 +26,15 @@ export var AssessmentScreen = ({ history, match }) => {
 	const urlVar = useSelector(state => state.urlVar)
     const { urlParameter } = urlVar
 
-
+	
 	var tc_id = useSelector((state) => state.userLogin.userInfo.TC_id);
 	var tp_id = useSelector((state) => state.userLogin.userInfo.TP_id);
 	//var ch_id = useSelector(state=>state.teacherCourses.TeacherInfo[0].CH_id)
 
 	//var co_id = useSelector(state=>state.AssessmentsInfo.CO_id)
-
-	var Getcuid = (tc_id, tp_id, am_id, co_id) => {
-		var text = "unlock";
+	var text="unlock"
+	var Getcuid = (tc_id, tp_id, am_id, co_id, CA_status) => {
+		text = "lock";
 		var cu_id;
 		var ch_id;
 		for (var i = 0; i < Object.keys(CoursesInfo).length; i++) {
@@ -44,18 +44,9 @@ export var AssessmentScreen = ({ history, match }) => {
 			}
 			break;
 		}
-
-		// for (var i = 0; i < Object.keys(TeacherInfo).length; i++) {
-		// 	console.log("ch_id - ");
-		// 	if (TeacherInfo[i].CU_id === cu_id) {
-		// 		ch_id = TeacherInfo[i].CH_id;
-		// 	}
-		// 	console.log(TeacherInfo[i].CH_id);
-		// 	break;
-		// }
 		ch_id=urlParameter.cohortID;
 
-		updateAssessmentDetails(ch_id, tc_id, tp_id, am_id, co_id);
+		updateAssessmentDetails(ch_id, tc_id, tp_id, am_id, co_id, CA_status);
 	};
 
 	useEffect(() => {
@@ -99,11 +90,40 @@ export var AssessmentScreen = ({ history, match }) => {
 										: key.AM_Duration}
 								</td>
 								<td>
-									<button
-										onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id)}
-									>
-										unlock
-									</button>
+								{/* {key.CA_status === null
+										? (<button
+											onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id)}
+										> unlock </button>)
+										: (<button
+											onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id)}
+										> end </button>)} */}
+
+{(() => {
+            if (key.CA_status == null) {
+              return (
+                
+					<button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
+										> unlock </button>
+				
+              )
+            } else if (key.CA_status == "U") {
+              return (
+                <button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
+										> End assessment </button>
+				
+              )
+            } else {
+              return (
+				<button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
+				> View result </button>
+
+              )
+            }
+        })()}
+
+
+
+
 								</td>
 								{/* <button onClick={Getcuid(tc_id,tp_id,key.AM_id,key.CO_id)}></button> */}
 							</tr>
