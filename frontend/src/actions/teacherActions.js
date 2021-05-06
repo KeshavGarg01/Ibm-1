@@ -294,9 +294,8 @@ export const assessmentDetails = (co_id) => async (dispatch, getState) => {
 
 export const updateAssessmentDetails = (ch_id, tc_id, tp_id, am_id, co_id) => {
 	//const cu_id = useSelector(state=>state.teacherCourses.coursesInfo.CU_id)
-	//console.log(cu_id)
+	console.log(ch_id, tc_id, tp_id, am_id, co_id)
 
-	console.log("hiii");
 	axios.post("/api/teachers/updateassessments", {
 		ch_id,
 		tc_id,

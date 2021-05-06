@@ -1,5 +1,8 @@
 const pool = require("../config/db");
-
+var express = require('express');
+var mysql = require('mysql');
+var app = express();
+const path = require('path');
 const getStudentCourses = (req, res) => {
 	const { st_id } = req.body;
 	pool.getConnection((err, conn) => {
@@ -189,11 +192,11 @@ const getStudentAssessments = (req, res) => {
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
 		else {
-			let sql = `select AM_id,AM_Name,AM_Duration from assessment where AM_id IN (select AM_id from cohortassessment where CH_id=(SELECT CH_id FROM cohortstudent WHERE ST_id = ?) and TC_id=(SELECT TC_id FROM cohortstudent WHERE ST_id = ?) and TP_id=(SELECT TP_id FROM cohortstudent WHERE ST_id = ?));`;
+			let sql = `select AM_id,AM_Name,AM_Duration from assessment where AM_id IN (select AM_id from cohorassessment where CH_id=(SELECT CH_id FROM cohortstudent WHERE ST_id = ?) and TC_id=(SELECT TC_id FROM cohortstudent WHERE ST_id = ?) and TP_id=(SELECT TP_id FROM cohortstudent WHERE ST_id = ?));`;
 
 			conn.query(sql, [st_id, st_id, st_id], (err, result) => {
 				if (err) {
-					res.status(400).send("Querry Error");
+					res.status(400).send(err);
 					// console.log("hellooo");
 				} else {
 					// console.log("hellooo");
@@ -222,6 +225,7 @@ const getQuizzQuestions = (req, res) => {
 				else {
 					if (result.length > 0) {
 						res.json(result);
+						console.log(result)
 					} else {
 						res.status(401);
 						res.json({ message: "No Data Found" });
@@ -232,7 +236,35 @@ const getQuizzQuestions = (req, res) => {
 		}
 	});
 };
+var connection = mysql.createConnection({
+	host: 'localhost',
+	user: 'root',
+	password:'',
+	database:'smartkaksha_db'
+});
 
+connection.connect(function(error){
+	if(!!error){
+		console.log(error);
+	} else {
+		console.log('Connected');
+	}
+});
+app.get('/content',function(req,resp){
+	// pool.getConnection((err, conn) => {
+	// 	if (err) res.status(400).send("Connection Error");
+		
+	connection.query("SELECT * FROM assessmentquestion",function(error,rows,fields){
+		if(error){
+ 		console.log(error);
+ 	} else {
+ 		console.log(rows);
+ 		resp.send(rows);
+ 	}
+	});
+})
+const port=process.env.PORT || 3002;
+ app.listen(port, ()=> console.log(`port in use ${port}..`));
 module.exports = {
 	getStudentCourses,
 	getStudentSessionPlans,

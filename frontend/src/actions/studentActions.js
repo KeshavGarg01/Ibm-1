@@ -10,6 +10,10 @@ import {
 	STUDENT_ASSESSMENTS_SUCCESS,
 	STUDENT_ASSESSMENTS_REQUEST,
 	STUDENT_ASSESSMENTS_FAIL,
+	STUDENT_QUIZZ_SUCCESS,
+	STUDENT_QUIZZ_REQUEST,
+	STUDENT_QUIZZ_FAIL,
+	QUIZZ_RESET
 } from "../constants/studentConstants";
 import axios from "axios";
 import {
@@ -131,6 +135,36 @@ export const studentassessmentDetails = (st_id) => async (
 	} catch (error) {
 		dispatch({
 			type: STUDENT_ASSESSMENTS_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
+	}
+};
+
+export const studentQuizz = () => async (
+	dispatch,
+	getState
+) => {
+	try {
+		dispatch({ type: STUDENT_QUIZZ_REQUEST });
+
+		const config = {
+			header: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const { data } = await axios.post(
+			"/api/student/startquizz",
+			{  },
+			config
+		);
+		dispatch({ type: STUDENT_QUIZZ_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: STUDENT_QUIZZ_FAIL,
 			payload:
 				error.response && error.response.data.message
 					? error.response.data.message

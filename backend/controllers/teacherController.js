@@ -223,15 +223,16 @@ const getTeacherAssessments = (req, res) => {
 
 const updateTeacherAssessments = (req, res) => {
 	const { ch_id, tc_id, tp_id, am_id, co_id } = req.body;
-
+	console.log(ch_id, tc_id, tp_id, am_id, co_id)
 	pool.getConnection((err, conn) => {
 		if (err) res.status(400).send("Connection Error");
 		else {
 			//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
-			let sql = `insert into cohortassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'Unlocked',?,?);`;
+			let sql = `insert into cohorassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'Unlocked',?,?);`;
 			console.log("hiiiiiiiii")
 			conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
-				if (err) res.status(400).send("Querry Error");
+				
+				if (err) res.status(400).send(err);
 				else {
 					console.log(req.body);
 					if (result.length > 0) {

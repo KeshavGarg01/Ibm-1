@@ -55,7 +55,9 @@ export const StudentAssessmentScreen = ({ history, match }) => {
 										: key.AM_Duration}
 								</td>
 								<td>
+									<Link to={`/startquizz`}>
 									<button>start</button>
+											</Link>
 								</td>
 							</tr>
 						))}

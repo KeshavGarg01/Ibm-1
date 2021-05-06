@@ -23,6 +23,10 @@ export var AssessmentScreen = ({ history, match }) => {
 	var teacherCourses = useSelector((state) => state.teacherCourses);
 	var { CoursesInfo } = teacherCourses;
 
+	const urlVar = useSelector(state => state.urlVar)
+    const { urlParameter } = urlVar
+
+
 	var tc_id = useSelector((state) => state.userLogin.userInfo.TC_id);
 	var tp_id = useSelector((state) => state.userLogin.userInfo.TP_id);
 	//var ch_id = useSelector(state=>state.teacherCourses.TeacherInfo[0].CH_id)
@@ -41,14 +45,15 @@ export var AssessmentScreen = ({ history, match }) => {
 			break;
 		}
 
-		for (var i = 0; i < Object.keys(TeacherInfo).length; i++) {
-			console.log("ch_id - ");
-			if (TeacherInfo[i].CU_id === cu_id) {
-				ch_id = TeacherInfo[i].CH_id;
-			}
-			console.log(TeacherInfo[i].CH_id);
-			break;
-		}
+		// for (var i = 0; i < Object.keys(TeacherInfo).length; i++) {
+		// 	console.log("ch_id - ");
+		// 	if (TeacherInfo[i].CU_id === cu_id) {
+		// 		ch_id = TeacherInfo[i].CH_id;
+		// 	}
+		// 	console.log(TeacherInfo[i].CH_id);
+		// 	break;
+		// }
+		ch_id=urlParameter.cohortID;
 
 		updateAssessmentDetails(ch_id, tc_id, tp_id, am_id, co_id);
 	};

@@ -8,6 +8,10 @@ import {
 	STUDENT_ASSESSMENTS_SUCCESS,
 	STUDENT_ASSESSMENTS_REQUEST,
 	STUDENT_ASSESSMENTS_FAIL,
+	STUDENT_QUIZZ_SUCCESS,
+	STUDENT_QUIZZ_REQUEST,
+	STUDENT_QUIZZ_FAIL,
+	QUIZZ_RESET,
 } from "../constants/studentConstants";
 export const studentFAQReducer = (state = { FAQresult: [] }, action) => {
 	switch (action.type) {
@@ -35,6 +39,24 @@ export const studentAssessmentsReducer = (
 			return { loading: false, AssessmentsInfo: action.payload };
 		case STUDENT_ASSESSMENTS_FAIL:
 			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
+export const studentQuizzReducer = (
+	state = { QuizzInfo: [] },
+	action
+) => {
+	switch (action.type) {
+		case STUDENT_QUIZZ_REQUEST:
+			return { loading: true, QuizzInfo: [] };
+		case STUDENT_QUIZZ_SUCCESS:
+			return { loading: false, QuizzInfo: action.payload };
+		case STUDENT_QUIZZ_FAIL:
+			return { loading: false, error: action.payload };
+		case QUIZZ_RESET:
+		return { QuizzInfo: [] };
 		default:
 			return state;
 	}

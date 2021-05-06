@@ -11,11 +11,13 @@ import {
 	teacherTempReducer,
 	teacherSessionStatusReducer,
 	teacherAssessmentsReducer,
+
 } from "./reducers/teacherReducers";
 import { contentReducer } from "./reducers/contentReducer";
 import {
 	studentFAQReducer,
 	studentAssessmentsReducer,
+	studentQuizzReducer,
 } from "./reducers/studentReducer";
 
 const reducer = combineReducers({
@@ -31,6 +33,8 @@ const reducer = combineReducers({
 	studentFAQ: studentFAQReducer,
 	assessment: teacherAssessmentsReducer,
 	studentAssessment: studentAssessmentsReducer,
+	studentQuizz:studentQuizzReducer,
+
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
