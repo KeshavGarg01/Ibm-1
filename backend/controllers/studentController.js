@@ -258,7 +258,6 @@ app.get('/content',function(req,resp){
 		if(error){
  		console.log(error);
  	} else {
- 		console.log(rows);
  		resp.send(rows);
  	}
 	});

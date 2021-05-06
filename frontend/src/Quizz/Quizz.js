@@ -80,10 +80,11 @@ import Results from '../Results/Results';
   render() {
 
     return (
+        
         <Flexbox element="div" className="App" flexDirection="column" minHeight="100vh">
           <h2>Quiz</h2>
 
-          
+        
       (<Progress current_step={this.state.progress} question_length={this.state.quiz_data.length} />
         {this.state.progress < this.state.quiz_data.length ? (
           <div>
@@ -107,8 +108,10 @@ import Results from '../Results/Results';
             <Results score={this.state.score} end_message="Congratulations, you have finished!" retry={this.retryQuiz} />
 
           )}
-        </Flexbox>
+        
     );
+    </Flexbox>
+    )
   }
 }
 

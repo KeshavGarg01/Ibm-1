@@ -6,7 +6,8 @@ import './Progress.css';
 // stateless component
 
 const Progress = ({ current_step, question_length }) => {
-  let percent = current_step / question_length * 100;
+  let percent=0
+  percent = current_step / question_length * 100;
 
   return (
     <div>
