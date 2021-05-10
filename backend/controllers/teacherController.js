@@ -230,7 +230,7 @@ const updateTeacherAssessments = (req, res) => {
 
 			if(CA_status == null)
 			{//let sql0='select CH_id from cohort where TC_id=? and TP_id=? and CU_id=(select CU_id from curriculumdetails where CO_id=?)'
-			let sql = `insert into cohorassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'Unlocked',?,?);`;
+			let sql = `insert into cohorassessment (CH_id, TC_id, TP_id, CA_status,AM_id,CO_id) values(?,?,?,'U',?,?);`;
 			// console.log("hiiiiiiiii")
 			conn.query(sql, [ch_id, tc_id, tp_id, am_id, co_id], (err, result) => {
 				
