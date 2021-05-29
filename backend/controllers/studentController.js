@@ -3,6 +3,11 @@ var express = require('express');
 var mysql = require('mysql');
 var app = express();
 const path = require('path');
+
+
+const cors = require("cors");
+
+
 const getStudentCourses = (req, res) => {
 	const { st_id } = req.body;
 	pool.getConnection((err, conn) => {
@@ -242,7 +247,7 @@ var connection = mysql.createConnection({
 	password:'',
 	database:'smartkaksha_db'
 });
-
+app.use(cors());
 connection.connect(function(error){
 	if(!!error){
 		console.log(error);

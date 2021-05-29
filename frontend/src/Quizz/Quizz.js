@@ -15,7 +15,7 @@ import Results from '../Results/Results';
       score: 0,
       loading: true,
     data: null,
-    quiz_data:"",
+    quiz_data:" ",
     
     }
     //this.state.quiz_data="";
@@ -37,6 +37,7 @@ import Results from '../Results/Results';
     })
     .then((myJson) => {
      (JSON.stringify(myJson));
+     console.log(myJson);
       this.setState({quiz_data: myJson});
       
     })

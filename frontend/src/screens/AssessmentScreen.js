@@ -109,7 +109,7 @@ export var AssessmentScreen = ({ history, match }) => {
 										
 				
               )
-            } else if (key.CA_status == "U") {
+            } else if (key.CA_status == 'U') {
               return (
                 <button onClick={() => Getcuid(tc_id, tp_id, key.AM_id, key.CO_id, key.CA_status)}
 				> End assessment </button>			
